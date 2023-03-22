@@ -3,17 +3,19 @@ import DataTable from 'datatables.net-vue3'
 import DataTablesCore from 'datatables.net';
 import { ref } from 'vue'
 import { db}  from '@/firebase'
-import { collection, getDocs, query, where, onSnapshot } from "firebase/firestore";
+import { collection, serverTimestamp, query, orderBy, onSnapshot } from "firebase/firestore";
 
 DataTable.use(DataTablesCore);
 
 const colRef = collection(db, "appointments")
+const q = query(colRef, orderBy('createdAt', 'asc'))
 const aptRef = ref([])
 let appointments = aptRef.value  
 
-const unsubscribe = onSnapshot(colRef, (snap) => {
+const unsubscribe = onSnapshot(q, (snap) => {
       snap.docChanges().forEach((change) =>{  
             let changedata = change.doc.data()
+            // let timeConvr =  new DateTime(changedata.createdAt)
             changedata.id = change.doc.id    
             if (change.type === "added") {                          
               appointments.unshift(changedata)              
@@ -34,7 +36,7 @@ const unsubscribe = onSnapshot(colRef, (snap) => {
   )
 
 const columns = [
-  { data: 'timestamp'},	
+  { data: 'createdAt'},	
   { data: 'name' },	
   { data: 'jumin' },  
 	{ data: 'history' },	
