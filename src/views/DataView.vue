@@ -34,6 +34,7 @@ const unsubscribe = onSnapshot(colRef, (snap) => {
   )
 
 const columns = [
+  { data: 'timestamp'},	
   { data: 'name' },	
   { data: 'jumin' },  
 	{ data: 'history' },	
@@ -51,9 +52,10 @@ const columns = [
     <button @click="update">Update selected rows</button><br />
     <button @click="remove">Delete selected rows</button>
     
-    <DataTable class="display" :columns="columns" :data="aptRef" :options="{ select: true, responsive: true }" ref="table" >
+    <DataTable class="display" :columns="columns" :data="aptRef" :options="{ select: true, responsive: true }" >
       <thead>
         <tr>
+          <th>날짜</th>
           <th>이름</th>
           <th>주민번호</th>          
           <th>재진?</th>          
@@ -65,6 +67,7 @@ const columns = [
       </thead>
       <tfoot>
         <tr>
+          <th>날짜</th>
           <th>이름</th>
           <th>주민번호</th>          
           <th>재진?</th>          
