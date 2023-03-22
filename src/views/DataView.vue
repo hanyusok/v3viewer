@@ -1,42 +1,63 @@
 <script setup>
-import { db}  from '@/firebase'
-import { collection, getDocs } from "firebase/firestore";
-import { onMounted, ref } from 'vue';
-import { useAppointStore } from '../stores/appoint'
 import DataTable from 'datatables.net-vue3'
 import DataTablesCore from 'datatables.net';
+import { ref } from 'vue'
+import { db}  from '@/firebase'
+import { collection, getDocs, query, where, onSnapshot } from "firebase/firestore";
 
-const appoint = useAppointStore()
 DataTable.use(DataTablesCore);
+
+const colRef = collection(db, "appointments")
+const aptRef = ref([])
+let appointments = aptRef.value  
+
+const unsubscribe = onSnapshot(colRef, (snap) => {
+      snap.docChanges().forEach((change) =>{  
+            let changedata = change.doc.data()
+            changedata.id = change.doc.id    
+            if (change.type === "added") {                          
+              appointments.unshift(changedata)              
+            }
+            if (change.type === "modified") {                        
+              let index = appointments.findIndex(apt => apt.id === changedata.id)          
+              Object.assign(appointments[index], changedata)
+            }
+            if (change.type === "removed") {                        
+              let index = appointments.findIndex(apt => apt.id === changedata.id)          
+              appointments.splice(index, 1)              
+            }                       
+          })          
+        },
+    (error) =>{
+      console.log(error)
+    }    
+  )
 
 const columns = [
   { data: 'name' },	
-  { data: 'jumin' },
-  
-	{ data: 'history' },
-	
+  { data: 'jumin' },  
+	{ data: 'history' },	
 	{ data: 'memo' },	
 	{ data: 'phone' },
 	{ data: 'why' },
   { data: 'email' },
 ]
 
-
 </script>
 
 <template>
   <main>   
+    <button @click="add">Add new row</button><br />
+    <button @click="update">Update selected rows</button><br />
+    <button @click="remove">Delete selected rows</button>
     
-    <DataTable class="display" :columns="columns" :data="appoint.appointState" :options="{ select: true }" >
+    <DataTable class="display" :columns="columns" :data="aptRef" :options="{ select: true, responsive: true }" ref="table" >
       <thead>
         <tr>
           <th>이름</th>
-          <th>주민번호</th>
-          
-          <th>재진?</th>
-          
-          <th>메모</th>
-          
+          <th>주민번호</th>          
+          <th>재진?</th>          
+          <th>메모</th>          
           <th>핸드폰</th>
 			    <th>내용</th>
           <th>이메일</th>
@@ -45,12 +66,9 @@ const columns = [
       <tfoot>
         <tr>
           <th>이름</th>
-          <th>주민번호</th>
-          
-          <th>재진?</th>
-          
-          <th>메모</th>
-          
+          <th>주민번호</th>          
+          <th>재진?</th>          
+          <th>메모</th>          
           <th>핸드폰</th>
 			    <th>내용</th>
           <th>이메일</th>

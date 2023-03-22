@@ -31,3 +31,4 @@ npm run build
 ### Reference
 
 https://datatables.net/blog/2022-06-22-vue
+https://github.com/cawa-93/vite-electron-builder
