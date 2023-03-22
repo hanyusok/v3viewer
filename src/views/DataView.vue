@@ -5,7 +5,8 @@ import { ref } from 'vue'
 import { db}  from '@/firebase'
 import { collection, serverTimestamp, query, orderBy, onSnapshot } from "firebase/firestore";
 
-DataTable.use(DataTablesCore);
+DataTable.use(DataTablesCore)
+//DataTable.datetime('D MMM YYYY')
 
 const colRef = collection(db, "appointments")
 const q = query(colRef, orderBy('createdAt', 'asc'))
@@ -30,13 +31,13 @@ const unsubscribe = onSnapshot(q, (snap) => {
             }                       
           })          
         },
-    (error) =>{
-      console.log(error)
-    }    
+      (error) =>{
+        console.log(error)
+      }    
   )
 
 const columns = [
-  { data: 'createdAt'},	
+  { data: 'createdAt' },	
   { data: 'name' },	
   { data: 'jumin' },  
 	{ data: 'history' },	
