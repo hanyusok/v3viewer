@@ -27,3 +27,7 @@ npm run dev
 ```sh
 npm run build
 ```
+
+### Reference
+
+https://datatables.net/blog/2022-06-22-vue

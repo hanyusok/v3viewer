@@ -8,6 +8,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "datatables.net-bs5": "^1.13.4",
+    "datatables.net-dt": "^1.13.4",
     "datatables.net-vue3": "^2.1.0",
     "firebase": "^9.18.0",
     "pinia": "^2.0.32",

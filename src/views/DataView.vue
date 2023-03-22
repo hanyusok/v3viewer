@@ -10,13 +10,15 @@ const appoint = useAppointStore()
 DataTable.use(DataTablesCore);
 
 const columns = [
-	{ data: 'email' },
+  { data: 'name' },	
+  { data: 'jumin' },
+  
 	{ data: 'history' },
-	{ data: 'jumin' },
-	{ data: 'memo' },
-	{ data: 'name' },
+	
+	{ data: 'memo' },	
 	{ data: 'phone' },
 	{ data: 'why' },
+  { data: 'email' },
 ]
 
 
@@ -28,15 +30,36 @@ const columns = [
     <DataTable class="display" :columns="columns" :data="appoint.appointState" :options="{ select: true }" >
       <thead>
         <tr>
-          <th>Email</th>
-          <th>History</th>
-          <th>Jumin</th>
-          <th>Memo</th>
-          <th>Name</th>
-          <th>Phone</th>
-			    <th>Why</th>
+          <th>이름</th>
+          <th>주민번호</th>
+          
+          <th>재진?</th>
+          
+          <th>메모</th>
+          
+          <th>핸드폰</th>
+			    <th>내용</th>
+          <th>이메일</th>
         </tr>
       </thead>
+      <tfoot>
+        <tr>
+          <th>이름</th>
+          <th>주민번호</th>
+          
+          <th>재진?</th>
+          
+          <th>메모</th>
+          
+          <th>핸드폰</th>
+			    <th>내용</th>
+          <th>이메일</th>
+        </tr>
+      </tfoot>
     </DataTable>
   </main>
 </template>
+<style>
+@import 'datatables.net-dt';
+@import 'datatables.net-bs5';
+</style>
