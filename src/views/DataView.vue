@@ -2,23 +2,41 @@
 import { db}  from '@/firebase'
 import { collection, getDocs } from "firebase/firestore";
 import { onMounted, ref } from 'vue';
+import { useAppointStore } from '../stores/appoint'
+import DataTable from 'datatables.net-vue3'
+import DataTablesCore from 'datatables.net';
+
+const appoint = useAppointStore()
+DataTable.use(DataTablesCore);
+
+const columns = [
+	{ data: 'email' },
+	{ data: 'history' },
+	{ data: 'jumin' },
+	{ data: 'memo' },
+	{ data: 'name' },
+	{ data: 'phone' },
+	{ data: 'why' },
+]
 
 
-onMounted(async () =>{  
-  const querySnapshot = await getDocs(collection(db, "appointments"));
-  querySnapshot.forEach((doc) => {
-  // doc.data() is never undefined for query doc snapshots
-    // const appointments = ref([])
-    // appointments.push(doc.data())
-    console.log(doc.id, " => ", doc.data());
-})
-
-});
 </script>
 
 <template>
-  <main>
-    DataView Start Here
-    <!-- {{ appointments }} -->
+  <main>   
+    
+    <DataTable class="display" :columns="columns" :data="appoint.appointState" :options="{ select: true }" >
+      <thead>
+        <tr>
+          <th>Email</th>
+          <th>History</th>
+          <th>Jumin</th>
+          <th>Memo</th>
+          <th>Name</th>
+          <th>Phone</th>
+			    <th>Why</th>
+        </tr>
+      </thead>
+    </DataTable>
   </main>
 </template>
