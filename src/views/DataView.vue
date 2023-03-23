@@ -2,7 +2,7 @@
 import DataTable from 'datatables.net-vue3'
 import DataTablesCore from 'datatables.net';
 import languageKO from 'datatables.net-plugins/i18n/ko.json'
-import { ref } from 'vue'
+import { ref, render } from 'vue'
 import { db}  from '@/firebase'
 import { collection, query, orderBy, onSnapshot } from "firebase/firestore";
 import { formatRelative } from 'date-fns'
@@ -53,6 +53,7 @@ const columns = [
 	{ data: 'history' },	
 	{ data: 'memo' },	
 	{ data: 'phone' },
+  // { data: 'kakao' },
 	{ data: 'why' },
   { data: 'email' },
 ]
@@ -61,9 +62,7 @@ const columns = [
 
 <template>
   <main>   
-    <!-- <button @click="add">Add new row</button><br />
-    <button @click="update">Update selected rows</button><br />
-    <button @click="remove">Delete selected rows</button> -->
+   
     
     <DataTable class="display" :columns="columns" :data="aptRef" :options="{ select: true, responsive: true, language: languageKO }" >
       <thead>
@@ -74,6 +73,7 @@ const columns = [
           <th>재진?</th>          
           <th>메모</th>          
           <th>핸드폰</th>
+          <!-- <th>카톡</th> -->
 			    <th>내용</th>
           <th>이메일</th>
         </tr>
@@ -86,6 +86,7 @@ const columns = [
           <th>재진?</th>          
           <th>메모</th>          
           <th>핸드폰</th>
+          <!-- <th>카톡</th> -->
 			    <th>내용</th>
           <th>이메일</th>
         </tr>
