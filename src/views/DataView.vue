@@ -5,7 +5,9 @@ import languageKO from 'datatables.net-plugins/i18n/ko.json'
 import { ref } from 'vue'
 import { db}  from '@/firebase'
 import { collection, serverTimestamp, query, orderBy, onSnapshot } from "firebase/firestore";
-import { formatDistanceToNow } from 'date-fns'
+// import { formatDistanceToNow } from 'date-fns'
+import { formatRelative } from 'date-fns'
+import { ko } from 'date-fns/esm/locale'
 
 DataTable.use(DataTablesCore)
 
@@ -21,7 +23,8 @@ const unsubscribe = onSnapshot(q, (snap) => {
             //DateTime Conversion
             let preDate = changedata.createdAt.toDate()
             if (preDate){
-              changedata.createdAt = formatDistanceToNow(preDate)
+              // changedata.createdAt = formatDistanceToNow(preDate)
+              changedata.createdAt = formatRelative(preDate, new Date(), { locale: ko})
             }
 
             changedata.id = change.doc.id    
