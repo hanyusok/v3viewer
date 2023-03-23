@@ -16,10 +16,13 @@ let appointments = aptRef.value
 const unsubscribe = onSnapshot(q, (snap) => {
       snap.docChanges().forEach((change) =>{  
             let changedata = change.doc.data()
-            // let timeConvr =  new DateTime(changedata.createdAt)
-            if (changedata.createdAt){
-              changedata.createdAt = formatDistanceToNow(change.doc.data.createdAt)
+
+            //DateTime Conversion
+            let preDate = changedata.createdAt.toDate()
+            if (preDate){
+              changedata.createdAt = formatDistanceToNow(preDate)
             }
+
             changedata.id = change.doc.id    
             if (change.type === "added") {                          
               appointments.unshift(changedata)              
@@ -56,9 +59,9 @@ const columns = [
 
 <template>
   <main>   
-    <button @click="add">Add new row</button><br />
+    <!-- <button @click="add">Add new row</button><br />
     <button @click="update">Update selected rows</button><br />
-    <button @click="remove">Delete selected rows</button>
+    <button @click="remove">Delete selected rows</button> -->
     
     <DataTable class="display" :columns="columns" :data="aptRef" :options="{ select: true, responsive: true }" >
       <thead>
