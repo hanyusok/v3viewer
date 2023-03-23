@@ -4,9 +4,9 @@ import DataTablesCore from 'datatables.net';
 import { ref } from 'vue'
 import { db}  from '@/firebase'
 import { collection, serverTimestamp, query, orderBy, onSnapshot } from "firebase/firestore";
+import { formatDistanceToNow } from 'date-fns'
 
 DataTable.use(DataTablesCore)
-//DataTable.datetime('D MMM YYYY')
 
 const colRef = collection(db, "appointments")
 const q = query(colRef, orderBy('createdAt', 'asc'))
@@ -17,6 +17,9 @@ const unsubscribe = onSnapshot(q, (snap) => {
       snap.docChanges().forEach((change) =>{  
             let changedata = change.doc.data()
             // let timeConvr =  new DateTime(changedata.createdAt)
+            if (changedata.createdAt){
+              changedata.createdAt = formatDistanceToNow(change.doc.data.createdAt)
+            }
             changedata.id = change.doc.id    
             if (change.type === "added") {                          
               appointments.unshift(changedata)              
@@ -35,6 +38,8 @@ const unsubscribe = onSnapshot(q, (snap) => {
         console.log(error)
       }    
   )
+
+
 
 const columns = [
   { data: 'createdAt' },	
