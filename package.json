@@ -10,6 +10,7 @@
   "dependencies": {
     "datatables.net-bs5": "^1.13.4",
     "datatables.net-dt": "^1.13.4",
+    "datatables.net-plugins": "^1.13.1",
     "datatables.net-vue3": "^2.1.0",
     "date-fns": "^2.29.3",
     "firebase": "^9.18.0",

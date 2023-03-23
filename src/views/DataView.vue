@@ -1,6 +1,7 @@
 <script setup>
 import DataTable from 'datatables.net-vue3'
 import DataTablesCore from 'datatables.net';
+import languageKO from 'datatables.net-plugins/i18n/ko.json'
 import { ref } from 'vue'
 import { db}  from '@/firebase'
 import { collection, serverTimestamp, query, orderBy, onSnapshot } from "firebase/firestore";
@@ -63,7 +64,7 @@ const columns = [
     <button @click="update">Update selected rows</button><br />
     <button @click="remove">Delete selected rows</button> -->
     
-    <DataTable class="display" :columns="columns" :data="aptRef" :options="{ select: true, responsive: true }" >
+    <DataTable class="display" :columns="columns" :data="aptRef" :options="{ select: true, responsive: true, language: languageKO }" >
       <thead>
         <tr>
           <th>날짜</th>
