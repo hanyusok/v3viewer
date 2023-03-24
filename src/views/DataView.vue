@@ -1,19 +1,47 @@
 <script setup>
 import DataTable from 'datatables.net-vue3'
 import DataTablesCore from 'datatables.net';
+// import Jszip from 'jszip';
+// import pdfmake from 'pdfmake';
+// import pdfFonts from 'pdfmake/build/vfs_fonts'
+// import DataTable from 'datatables.net-dt';
+// import buttons from 'datatables.net-buttons-dt';
+// import 'datatables.net-buttons/js/buttons.colVis.mjs';
+// import ButtonsHtml5 from 'datatables.net-buttons/js/buttons.html5.mjs';
+// import 'datatables.net-buttons/js/buttons.print.mjs';
+// import 'datatables.net-responsive-dt';
+// import 'datatables.net-select-dt';
+
+
+
 import languageKO from 'datatables.net-plugins/i18n/ko.json'
-import { ref, render } from 'vue'
+import { onMounted, ref, render } from 'vue'
 import { db}  from '@/firebase'
 import { collection, query, orderBy, onSnapshot } from "firebase/firestore";
 import { format, formatDistance, formatDistanceStrict, formatDistanceToNow } from 'date-fns'
 import { ko } from 'date-fns/esm/locale'
 
-DataTable.use(DataTablesCore)
 
+// pdfmake.vfs = pdfFonts.pdfmake.vfs;
+// window.Jszip = Jszip
+DataTable.use(DataTablesCore)
+// DataTable.use(pdfmake)
+// DataTable.use(ButtonsHtml5)
+//initialize
 const colRef = collection(db, "appointments")
 const q = query(colRef, orderBy('createdAt', 'asc'))
 const aptRef = ref([])
 let appointments = aptRef.value  
+const options = {  
+  // dom: 'Bfrtip', 테이블wrap없어진다
+  responsive: true,
+  select: true,
+  language: languageKO,
+  // buttons: ['copy']
+}
+
+
+
 
 const unsubscribe = onSnapshot(q, (snap) => {
       snap.docChanges().forEach((change) =>{  
@@ -62,10 +90,8 @@ const columns = [
 </script>
 
 <template>
-  <main>   
-   
-    
-    <DataTable class="display" :columns="columns" :data="aptRef" :options="{ select: true, responsive: true, language: languageKO }" >
+  <main>    
+    <DataTable class="display" :columns="columns" :data="aptRef" :options="options" >
       <thead>
         <tr>
           <th>날짜</th>
@@ -98,4 +124,5 @@ const columns = [
 <style>
 @import 'datatables.net-dt';
 @import 'datatables.net-bs5';
+/* @import 'datatables.net-select-bs5'; */
 </style>
