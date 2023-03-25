@@ -21,6 +21,8 @@ import { collection, query, orderBy, onSnapshot } from "firebase/firestore";
 import { format, formatDistance, formatDistanceStrict, formatDistanceToNow } from 'date-fns'
 import { ko } from 'date-fns/esm/locale'
 
+import { Vue3ToggleButton } from 'vue3-toggle-button'
+
 
 // pdfmake.vfs = pdfFonts.pdfmake.vfs;
 // window.Jszip = Jszip
@@ -39,7 +41,10 @@ const options = {
   language: languageKO,
   // buttons: ['copy']
 }
-
+const alarmSwitch = ref(false)
+function toggle(){
+  alarmSwitch.value = !alarmSwitch.value
+}
 
 
 
@@ -58,8 +63,10 @@ const unsubscribe = onSnapshot(q, (snap) => {
             changedata.id = change.doc.id    
             if (change.type === "added") {                          
               appointments.unshift(changedata)
-              // alert message after  
-              alert(`${changedata.name}님의 비대면 신청: ${changedata.createdAt} `)              
+              // alarm switch
+              if (alarmSwitch) {
+                alert(`${changedata.name}님의 비대면 신청: ${changedata.createdAt} `)              
+              }
             }
             if (change.type === "modified") {                        
               let index = appointments.findIndex(apt => apt.id === changedata.id)          
@@ -93,10 +100,12 @@ const columns = [
 </script>
 
 <template>
-  <main>    
+  <main>   
+    <Vue3ToggleButton v-model:alarmSwitch="alarmSwitch" :handleColor="'#cc00cc'" />
+     <p  @on-change="toggle">Alarm :  {{alarmSwitch}}</p>
     <DataTable class="display" :columns="columns" :data="aptRef" :options="options" >
       <thead>
-        <tr>
+        <tr>  
           <th>날짜</th>
           <th>이름</th>
           <th>주민번호</th>          
@@ -128,4 +137,5 @@ const columns = [
 @import 'datatables.net-dt';
 @import 'datatables.net-bs5';
 /* @import 'datatables.net-select-bs5'; */
+@import '../../node_modules/vue3-toggle-button/dist/style.css'
 </style>
