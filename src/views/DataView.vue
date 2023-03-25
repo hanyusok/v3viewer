@@ -54,9 +54,12 @@ const unsubscribe = onSnapshot(q, (snap) => {
               changedata.createdAt = format(preDate, " MM월dd일p", { locale: ko})
             }
 
+            //when new appointment add
             changedata.id = change.doc.id    
             if (change.type === "added") {                          
-              appointments.unshift(changedata)              
+              appointments.unshift(changedata)
+              // alert message after  
+              alert(`${changedata.name}님의 비대면 신청: ${changedata.createdAt} `)              
             }
             if (change.type === "modified") {                        
               let index = appointments.findIndex(apt => apt.id === changedata.id)          
