@@ -22,6 +22,7 @@ import { format, formatDistance, formatDistanceStrict, formatDistanceToNow } fro
 import { ko } from 'date-fns/esm/locale'
 
 import { Vue3ToggleButton } from 'vue3-toggle-button'
+import  Swal  from 'sweetalert2'
 
 
 // pdfmake.vfs = pdfFonts.pdfmake.vfs;
@@ -41,10 +42,7 @@ const options = {
   language: languageKO,
   // buttons: ['copy']
 }
-const alarmSwitch = ref(false)
-function toggle(){
-  alarmSwitch.value = !alarmSwitch.value
-}
+
 
 
 
@@ -63,10 +61,9 @@ const unsubscribe = onSnapshot(q, (snap) => {
             changedata.id = change.doc.id    
             if (change.type === "added") {                          
               appointments.unshift(changedata)
-              // alarm switch
-              if (alarmSwitch) {
-                alert(`${changedata.name}님의 비대면 신청: ${changedata.createdAt} `)              
-              }
+             
+                  Swal.fire(`${changedata.name},  ${changedata.createdAt} 신청! `)
+             
             }
             if (change.type === "modified") {                        
               let index = appointments.findIndex(apt => apt.id === changedata.id)          
@@ -100,9 +97,7 @@ const columns = [
 </script>
 
 <template>
-  <main>   
-    <Vue3ToggleButton v-model:alarmSwitch="alarmSwitch" :handleColor="'#cc00cc'" />
-     <p  @on-change="toggle">Alarm :  {{alarmSwitch}}</p>
+  <main>       
     <DataTable class="display" :columns="columns" :data="aptRef" :options="options" >
       <thead>
         <tr>  
@@ -137,5 +132,5 @@ const columns = [
 @import 'datatables.net-dt';
 @import 'datatables.net-bs5';
 /* @import 'datatables.net-select-bs5'; */
-@import '../../node_modules/vue3-toggle-button/dist/style.css'
+@import '../../node_modules/vue3-toggle-button/dist/style.css';
 </style>

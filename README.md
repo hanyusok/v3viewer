@@ -30,5 +30,10 @@ npm run build
 
 ### Reference
 
-https://datatables.net/blog/2022-06-22-vue
-https://github.com/cawa-93/vite-electron-builder
+# https://datatables.net/blog/2022-06-22-vue
+
+# https://github.com/cawa-93/vite-electron-builder
+
+# https://sweetalert2.github.io/#download
+
+# https://velog.io/@skyepodium/%EC%B9%B4%EC%B9%B4%EC%98%A4-%EA%B3%B5%EC%9C%A0%ED%95%98%EA%B8%B0-JS-SDK-v2-vue-%EC%97%B0%EB%8F%99
