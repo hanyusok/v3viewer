@@ -61,7 +61,7 @@ const unsubscribe = onSnapshot(q, (snap) => {
             if (change.type === "added") {                          
               appointments.unshift(changedata)
              
-                  Swal.fire(`${changedata.name},  ${changedata.createdAt} 신청! `)
+              Swal.fire(`${changedata.name},  ${changedata.createdAt} 신청! `)
              
             }
             if (change.type === "modified") {                        
