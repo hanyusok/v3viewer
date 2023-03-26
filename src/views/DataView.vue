@@ -1,49 +1,26 @@
 <script setup>
 import DataTable from 'datatables.net-vue3'
 import DataTablesCore from 'datatables.net';
-// import Jszip from 'jszip';
-// import pdfmake from 'pdfmake';
-// import pdfFonts from 'pdfmake/build/vfs_fonts'
-// import DataTable from 'datatables.net-dt';
-// import buttons from 'datatables.net-buttons-dt';
-// import 'datatables.net-buttons/js/buttons.colVis.mjs';
-// import ButtonsHtml5 from 'datatables.net-buttons/js/buttons.html5.mjs';
-// import 'datatables.net-buttons/js/buttons.print.mjs';
-// import 'datatables.net-responsive-dt';
-// import 'datatables.net-select-dt';
-
-
-
 import languageKO from 'datatables.net-plugins/i18n/ko.json'
 import { onMounted, ref, render } from 'vue'
 import { db}  from '@/firebase'
 import { collection, query, orderBy, onSnapshot } from "firebase/firestore";
 import { format, formatDistance, formatDistanceStrict, formatDistanceToNow } from 'date-fns'
 import { ko } from 'date-fns/esm/locale'
-
 import  Swal  from 'sweetalert2'
 
-
-// pdfmake.vfs = pdfFonts.pdfmake.vfs;
-// window.Jszip = Jszip
 DataTable.use(DataTablesCore)
-// DataTable.use(pdfmake)
-// DataTable.use(ButtonsHtml5)
+
 //initialize
 const colRef = collection(db, "appointments")
 const q = query(colRef, orderBy('createdAt', 'asc'))
 const aptRef = ref([])
 let appointments = aptRef.value  
 const options = {  
-  // dom: 'Bfrtip', 테이블wrap없어진다
   responsive: true,
   select: true,
   language: languageKO,
-  // buttons: ['copy']
 }
-
-
-
 
 const unsubscribe = onSnapshot(q, (snap) => {
       snap.docChanges().forEach((change) =>{  
@@ -64,6 +41,7 @@ const unsubscribe = onSnapshot(q, (snap) => {
               Swal.fire(`${changedata.name},  ${changedata.createdAt} 신청! `)
              
             }
+            
             if (change.type === "modified") {                        
               let index = appointments.findIndex(apt => apt.id === changedata.id)          
               Object.assign(appointments[index], changedata)
@@ -79,24 +57,30 @@ const unsubscribe = onSnapshot(q, (snap) => {
       }    
   )
 
-
-
 const columns = [
   { data: 'createdAt' },	
   { data: 'name' },	
   { data: 'jumin' },  
 	{ data: 'history' },	
 	{ data: 'memo' },	
-	{ data: 'phone' },
-  // { data: 'kakao' },
+	{ data: 'phone' },  
 	{ data: 'why' },
   { data: 'email' },
 ]
 
+const kakaoLogin = () => {  
+  Kakao.Auth.authorize({ 
+    redirectUri: 'http://127.0.0.1:5173/callback',
+    throughTalk: true
+  })
+}
+
+
 </script>
 
 <template>
-  <main>       
+  <main>
+    <a @click="kakaoLogin" ><img src="../assets/kakao_login_btn.png" /></a>       
     <DataTable class="display" :columns="columns" :data="aptRef" :options="options" >
       <thead>
         <tr>  
@@ -105,8 +89,7 @@ const columns = [
           <th>주민번호</th>          
           <th>재진?</th>          
           <th>메모</th>          
-          <th>핸드폰</th>
-          <!-- <th>카톡</th> -->
+          <th>핸드폰</th>          
 			    <th>내용</th>
           <th>이메일</th>
         </tr>
@@ -118,8 +101,7 @@ const columns = [
           <th>주민번호</th>          
           <th>재진?</th>          
           <th>메모</th>          
-          <th>핸드폰</th>
-          <!-- <th>카톡</th> -->
+          <th>핸드폰</th>          
 			    <th>내용</th>
           <th>이메일</th>
         </tr>
@@ -130,6 +112,5 @@ const columns = [
 <style>
 @import 'datatables.net-dt';
 @import 'datatables.net-bs5';
-/* @import 'datatables.net-select-bs5'; */
-@import '../../node_modules/vue3-toggle-button/dist/style.css';
+@import '../../node_modules/sweetalert2/dist/sweetalert2.min.css';
 </style>
