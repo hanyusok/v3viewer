@@ -1,8 +1,9 @@
 <script setup>
 import axios  from 'axios'
 import qs from 'qs'
+import { ref } from 'vue'
 
-let authCode = location.search.substring(6)
+const authCode = ref(location.search.substring(6))
 
 const accessToken = (authCode) => {
   axios({
@@ -19,7 +20,8 @@ const accessToken = (authCode) => {
       'redirect_uri': 'http://127.0.0.1:5173/callback'
     })
   }).then((response) => {
-    let ac_token = response.data.access_token    
+    let ac_token = response.data.access_token 
+    console.log(response.data.access_token)   
     Kakao.Auth.setAccessToken(ac_token)   
   }).cath((err) => {
     console.log(err)
