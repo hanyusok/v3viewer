@@ -36,12 +36,9 @@ const unsubscribe = onSnapshot(q, (snap) => {
             //when new appointment add
             changedata.id = change.doc.id    
             if (change.type === "added") {                          
-              appointments.unshift(changedata)
-             
-              Swal.fire(`${changedata.name},  ${changedata.createdAt} 신청! `)
-             
-            }
-            
+              appointments.unshift(changedata)             
+              Swal.fire(`${changedata.name},  ${changedata.createdAt} 신청! `)             
+            }            
             if (change.type === "modified") {                        
               let index = appointments.findIndex(apt => apt.id === changedata.id)          
               Object.assign(appointments[index], changedata)
