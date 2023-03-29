@@ -3,14 +3,15 @@ import axios  from 'axios'
 import qs from 'qs'
 import { onMounted, ref } from 'vue'
 
-const authCode = ref(location.search.substring(6))
+//const authCode = ref(location.search.substring(6))
+let authCode = location.search.substring(6)
 console.log(authCode)
 const accToken = ref()
+let respData
 
-const getKakaoToken = async(authCode) => {  
-  const resp = await axios({
-       method: 'POST',
-       url: 'https://kauth.kakao.com/oauth/token',
+const getKakaoToken = (authCode) => {   
+  axios({
+       method: 'POST',       
        headers: {
          'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
          },
@@ -18,21 +19,26 @@ const getKakaoToken = async(authCode) => {
          'grant_type': 'authorization_code',
          'client_id': '3c4ba9cc89263b9e66bca4c176a4eaf3',
          'client_secret': '8orFiiKOUqaaP5N1fbwfARNMmIuPpJCG',
-         'code': authCode,
+         'code': authCode,          
          'redirect_uri': 'http://127.0.0.1:5173/callback'
-       })
+       }),
+       url: 'https://kauth.kakao.com/oauth/token'
+     })
+     .then((response) => {
+        console.log(response)
      })  
-
-     let token = resp.data.access_token
-     accToken.value = token
+  
+    //  let token = resp.data.access_token
+    //  accToken.value = token
      
      
    //  .then((response) => {
-   //        let token = response.data()
-   //        accToken.value = token 
-   //        console.log(token)       
+   //   console.log(response.data())
+          // let token = response.data()
+          // accToken.value = token 
+          // console.log(token)       
           // Kakao.Auth.setAccessToken(ac_token)   
-   //      })
+     //   })
    //  .cath((err) => {
    //        console.log(err)
    //      })   
