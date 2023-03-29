@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import DataView from '../views/DataView.vue'
 import CallbackView from '../views/CallbackView.vue'
+import KakaoView from '../views/KakaoView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -11,18 +12,15 @@ const router = createRouter({
       component: DataView
     },
     {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue')
+      path: '/kakao',
+      name: 'kakao',      
+      component: KakaoView
     },
-    {
+     {
       path: '/callback',
-      name: 'callback',
+      name: 'callback',      
       component: CallbackView
-    }
+     }
   ]
 })
 
