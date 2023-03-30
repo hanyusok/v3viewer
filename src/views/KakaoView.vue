@@ -18,7 +18,7 @@ import { useRoute } from 'vue-router'
 <template>
     <main>
         <h3>Kakao 메세지 보내기</h3>        
-        <p>code : {{ props.acode }}</p>
+        <!-- <p>code : {{ props.acode }}</p> -->
         
     </main>
 </template>
