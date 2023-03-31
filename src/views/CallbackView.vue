@@ -14,28 +14,29 @@ const authCode = location.search.substring(6)
 console.log(`authCode : ${authCode}`)
 
 
-// const getKakaoToken = (authCode) => {   
-//   try {
-//     axios({
-//         method: 'POST',       
-//         headers: {
-//           'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
-//           },
-//         data: qs.stringify({
-//           'grant_type': 'authorization_code',
-//           'client_id': '3c4ba9cc89263b9e66bca4c176a4eaf3',
-//           'client_secret': '8orFiiKOUqaaP5N1fbwfARNMmIuPpJCG',
-//           'code': authCode,          
-//           'redirect_uri': 'http://127.0.0.1:5173/callback'
-//         }),
-//         url: 'https://kauth.kakao.com/oauth/token'
-//       })
-//       .then((response) => {
-//           console.log(response)
-//       })  
-//     } catch(err){
-//       console.log(err)
-//     }
+const getKakaoToken = (authCode) => {   
+  try {
+    axios({
+        method: 'POST',       
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+          },
+        data: qs.stringify({
+          'grant_type': 'authorization_code',
+       //   'client_id': '3c4ba9cc89263b9e66bca4c176a4eaf3',
+            'client_id': 'a58f889b066015dd555af2bb7577af7e',
+          'client_secret': '8orFiiKOUqaaP5N1fbwfARNMmIuPpJCG',
+          'code': authCode,          
+          'redirect_uri': 'http://127.0.0.1:5173/callback'
+        }),
+        url: 'https://kauth.kakao.com/oauth/token'
+      })
+      .then((response) => {
+          console.log(response)
+      })  
+    } catch(err){
+      console.log(err)
+    }
   
 //     //  let token = resp.data.access_token
 //     //  accToken.value = token
