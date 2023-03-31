@@ -2,11 +2,11 @@
 import axios  from 'axios'
 import qs from 'qs'
 import { onMounted, ref } from 'vue'
-import { useCookies } from 'vue3-cookies'
+// import { useCookies } from 'vue3-cookies'
 
-const { cookies } = useCookies()
+// const { cookies } = useCookies()
 // let ac = $cookies.get('authorize-access-token')
-let cookieVal = cookies.get('authorize-access-token')
+// let cookieVal = cookies.get('authorize-access-token')
 console.log(cookieVal)
 //console.log($cookies.get('authorize-access-token'))
 //const authCode = ref(location.search.substring(6))
@@ -23,8 +23,8 @@ const getKakaoToken = (authCode) => {
           },
         data: qs.stringify({
           'grant_type': 'authorization_code',
-       //   'client_id': '3c4ba9cc89263b9e66bca4c176a4eaf3',
-            'client_id': 'a58f889b066015dd555af2bb7577af7e',
+         'client_id': '3c4ba9cc89263b9e66bca4c176a4eaf3',
+            // 'client_id': 'a58f889b066015dd555af2bb7577af7e',
           'client_secret': '8orFiiKOUqaaP5N1fbwfARNMmIuPpJCG',
           'code': authCode,          
           'redirect_uri': 'http://127.0.0.1:5173/callback'
@@ -49,8 +49,7 @@ const getKakaoToken = (authCode) => {
 //           // console.log(token)       
 //           // Kakao.Auth.setAccessToken(ac_token)   
 //      //   })
-
-//    }
+   }
 
 
 
