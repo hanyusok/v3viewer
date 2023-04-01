@@ -67,7 +67,7 @@ const columns = [
 
 const kakaoLogin = () => {  
   Kakao.Auth.authorize({ 
-    redirectUri: 'http://127.0.0.1:5173/callback',
+    redirectUri: 'http://localhost:5173/callback',
     throughTalk: true
   })
 }
