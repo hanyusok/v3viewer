@@ -68,7 +68,8 @@ const columns = [
 const kakaoLogin = () => {  
   Kakao.Auth.authorize({ 
     redirectUri: 'http://localhost:5173/callback',
-    throughTalk: true
+    throughTalk: true,
+    scope: 'friends, talk_message'
   })
 }
 
