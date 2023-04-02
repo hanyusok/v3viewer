@@ -145,6 +145,46 @@ const talkToFriends = () => {
       });
   }
 
+const shareMsg = () => {
+  Kakao.Share.createDefaultButton({
+    container: '#kakaotalk-sharing-btn',
+    objectType: 'feed',
+    content: {
+      title: '딸기 치즈 케익',
+      description: '#케익 #딸기 #삼평동 #카페 #분위기 #소개팅',
+      imageUrl:
+        'https://mblogthumb-phinf.pstatic.net/MjAxNzA4MjlfMTg4/MDAxNTAzOTY4OTE5ODEx.9dk1srLaMI4MeSHtA-zMNBQ3KEVRu4xKq2-1ABLngfcg.6z2Xs6KFZ9agG8rAGDPbusZgSv3sr4ytPnxX3zLe51Eg.JPEG.umkr61/%EB%A1%AF%EB%8D%B0%EB%A7%88%ED%8A%B8_%EC%95%88%EC%84%B1%EC%A0%90_28.JPG?type=w800',
+      link: {
+        // [내 애플리케이션] > [플랫폼] 에서 등록한 사이트 도메인과 일치해야 함
+        mobileWebUrl: 'http://localhost:5173',
+        webUrl: 'http://localhost:5173',
+      },
+    },
+    social: {
+      likeCount: 286,
+      commentCount: 45,
+      sharedCount: 845,
+    },
+    buttons: [
+      {
+        title: '웹으로 보기',
+        link: {
+          mobileWebUrl: 'hhttp://localhost:5173',
+          webUrl: 'http://localhost:5173',
+        },
+      },
+      {
+        title: '앱으로 보기',
+        link: {
+          mobileWebUrl: 'http://localhost:5173',
+          webUrl: 'http://localhost:5173',
+        },
+      },
+    ],
+  });
+}
+
+
 </script>
 
 
@@ -157,7 +197,13 @@ const talkToFriends = () => {
     <button @click="talkToSelf">나에게 톡보내기</button>
     <hr>
     <button @click="talkToFriends">친구에게 톡보내기</button>
-    
+    <hr>
+    <button @click="shareMsg">공유 톡보내기</button>
+
+    <a id="kakaotalk-sharing-btn" href="javascript:;">
+  <img src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png"
+    alt="카카오톡 공유 보내기 버튼" />
+</a>
     
   </div>
 </template>
