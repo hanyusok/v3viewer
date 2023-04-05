@@ -8,10 +8,12 @@ import { collection, query, orderBy, onSnapshot } from "firebase/firestore";
 import { format, formatDistance, formatDistanceStrict, formatDistanceToNow } from 'date-fns'
 import { ko } from 'date-fns/esm/locale'
 import  Swal  from 'sweetalert2'
+import axios  from 'axios'
+import qs from 'qs'
 
 DataTable.use(DataTablesCore)
 
-//initialize
+//initialize of firestore
 const colRef = collection(db, "appointments")
 const q = query(colRef, orderBy('createdAt', 'asc'))
 const aptRef = ref([])
@@ -65,21 +67,84 @@ const columns = [
   { data: 'email' },
 ]
 
+//kakao scripts start from here
+const kakaoLogOut = () => {  
+  Kakao.Auth.logout()
+    .then((resp) => {      
+      Swal.fire(`로그아웃!`)
+      console.log(Kakao.Auth.getAccessToken())
+    })
+    .catch((err) => {
+      console.log('not logged in')
+    })
+}
+
 const kakaoLogin = () => {  
   Kakao.Auth.authorize({ 
-    redirectUri: 'http://localhost:5173/callback',
+    redirectUri: 'http://localhost:5173/',
     throughTalk: true,
     scope: 'friends, talk_message'
   })
+}
+
+const authCode = location.search.substring(6)
+const access_token = ref('')
+const kakaOptions = {
+          'grant_type': 'authorization_code',
+          'client_id': '3c4ba9cc89263b9e66bca4c176a4eaf3',            
+          'client_secret': '8orFiiKOUqaaP5N1fbwfARNMmIuPpJCG',          
+          'code': authCode,
+          'redirect_uri': 'http://localhost:5173/'
+        }
+
+onMounted(async() => {     
+    await axios({
+        method: 'POST',       
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+          },
+        data: qs.stringify(kakaOptions),
+        url: 'https://kauth.kakao.com/oauth/token'
+      })
+      .then((response) => {                              
+          Kakao.Auth.setAccessToken(response.data.access_token)
+          access_token.value = Kakao.Auth.getAccessToken()
+          console.log(`access_token : ${access_token.value}`)
+      })          
+      .catch((err) => {
+      })
+})
+
+const shareMsgInfo = () => {
+  Kakao.Share.sendCustom({
+    templateId: 85061,
+    templateArgs: {
+      title: '연습용',
+      description: '설명해보자'
+    }
+  });
+}
+
+const shareMsgPharm = () => {
+  Kakao.Share.sendCustom({
+    templateId: 85349,
+    templateArgs: {
+      title: '연습용',
+      description: '설명해보자'
+    }
+  });
 }
 
 
 </script>
 
 <template>
-  <main>
-    <!-- <a @click="kakaoLogin" ><img src="../assets/kakao_login_btn.png" /></a> -->
-    <button @click="kakaoLogin">카카오로그인</button>       
+  <main>        
+    <button  v-if="!access_token"   @click="kakaoLogin" >로그인</button>     
+    <button  @click="shareMsgInfo()">수납 안내</button>
+    <button  @click="shareMsgPharm()">처방전 안내</button>
+    <button  v-if="access_token"   @click="kakaoLogOut">로그아웃</button>    
+    <!-- <div v-if="access_token"> -->
     <DataTable class="display" :columns="columns" :data="aptRef" :options="options" >
       <thead>
         <tr>  
@@ -106,6 +171,7 @@ const kakaoLogin = () => {
         </tr>
       </tfoot>
     </DataTable>
+    <!-- </div> -->
   </main>
 </template>
 <style>

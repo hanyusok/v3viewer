@@ -5,14 +5,14 @@ console.log('kakao_initialized: ',Kakao.isInitialized());
 </script>
 
 <template>
-  <header>  
+<!--   <header>  
     <div>    
       <nav>
         <RouterLink to="/">Data</RouterLink>
         <RouterLink to="/kakao">Kakao</RouterLink>
       </nav>
     </div>
-  </header>
+  </header> -->
 
   <RouterView />
 </template>

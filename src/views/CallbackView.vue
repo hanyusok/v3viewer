@@ -6,7 +6,7 @@ import { onMounted, ref } from 'vue'
 
 const authCode = location.search.substring(6)
 const access_token = ref('')
-const options = {
+const kakaOptions = {
           'grant_type': 'authorization_code',
           'client_id': '3c4ba9cc89263b9e66bca4c176a4eaf3',            
           'client_secret': '8orFiiKOUqaaP5N1fbwfARNMmIuPpJCG',          
@@ -20,7 +20,7 @@ onMounted(async() => {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
           },
-        data: qs.stringify(options),
+        data: qs.stringify(kakaOptions),
         url: 'https://kauth.kakao.com/oauth/token'
       })
       .then((response) => {                              
@@ -146,9 +146,19 @@ onMounted(async() => {
       })
   } */
 
-const shareMsg = () => {
+const shareMsgInfo = () => {
   Kakao.Share.sendCustom({
     templateId: 85061,
+    templateArgs: {
+      title: '연습용',
+      description: '설명해보자'
+    }
+  });
+}
+
+const shareMsgPharm = () => {
+  Kakao.Share.sendCustom({
+    templateId: 85349,
     templateArgs: {
       title: '연습용',
       description: '설명해보자'
@@ -198,10 +208,11 @@ const shareMsg = () => {
    <!--  <hr>
     <button @click="talkToFriends">친구에게 톡보내기</button>
     <hr> -->
-    <button @click="shareMsg()">공유 톡보내기</button>
+    <button @click="shareMsgInfo()">수납 메세지</button>
+    <button @click="shareMsgPharm()">처방 메세지</button>
 
-    <a id="kakaotalk-sharing-btn" @click="shareMsg()"><img src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png"
-    alt="카카오톡 공유 보내기 버튼" /></a>
+    <!-- <a id="kakaotalk-sharing-btn" @click="shareMsg()"><img src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png"
+    alt="카카오톡 공유 보내기 버튼" /></a> -->
 
     <!-- <button @click="getFriendList">친구리스트 보기</button>
     <button @click="getMyInfo">개인정보 보기</button> -->

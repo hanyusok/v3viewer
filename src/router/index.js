@@ -10,17 +10,18 @@ const router = createRouter({
       path: '/',
       name: 'data',
       component: DataView
-    },
-    {
-      path: '/kakao',
-      name: 'kakao',      
-      component: KakaoView
-    },
-     {
-      path: '/callback',
-      name: 'callback',      
-      component: CallbackView
-     }
+    }
+    // ,
+    // {
+    //   path: '/kakao',
+    //   name: 'kakao',      
+    //   component: KakaoView
+    // },
+    //  {
+    //   path: '/callback',
+    //   name: 'callback',      
+    //   component: CallbackView
+    //  }
   ]
 })
 
