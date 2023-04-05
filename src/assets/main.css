@@ -26,10 +26,12 @@ a,
   padding-top: 0.2rem;  
 }
 .memo {
-  width: 600px auto;
-  text-align: right;
+  width: 500px;
+  text-align: left;
   margin-right: 0.1rem;
-  padding-top: 0.2rem;  
+  margin-top: auto;
+  margin-bottom: -0.8rem;
+
 }
 
 @media (hover: hover) {

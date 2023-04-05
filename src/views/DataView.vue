@@ -129,22 +129,14 @@ const shareMsgInfo = (cost) => {
 //처방전 전송
 const shareMsgPharm = () => {
   Kakao.Share.sendCustom({
-    templateId: 85349,
-    templateArgs: {
-      /* title: '연습용',
-      description: '설명해보자' */
-    }
+    templateId: 85349
   });
 }
 
 //검사결과 알림
 const sharelab = () => {
   Kakao.Share.sendCustom({
-    templateId: 92230,
-    templateArgs: {
-      /* title: '연습용',
-      description: '설명해보자' */
-    }
+    templateId: 92230  
   });
 }
 
@@ -176,7 +168,7 @@ const shareMemo = (name, memo) => {
 
 <template>
   <main>        
-    <button class="button" v-if="!access_token"   @click="kakaoLogin" >로그인</button>     
+    <button class="button" v-if="!access_token"   @click="kakaoLogin" >로그인</button> 
     <input class="input" v-model.lazy="cost" placeholder="금액" />
     <button class="button" @click="shareMsgInfo(cost)">수납</button>
     <button class="button" @click="shareMsgPharm">문전약국</button>
@@ -186,16 +178,14 @@ const shareMemo = (name, memo) => {
       <label for="email">Email</label>
     <button class="button" @click="shareFaxEmail(picked)">전송</button>   
     <button class="button" @click="sharelab">검사결과</button>
-    <br>
-    <input class="input" v-model.lazy="name" placeholder="이름" />
-    <!-- <input class="memo" v-model.lazy="memo" placeholder="메모" /> -->
-    <input class="memo" v-model.lazy="memo" placeholder="메모" />
-    <button class="button" @click="shareMemo(name, memo)">전송</button>
     <button class="button" v-if="access_token"   @click="kakaoLogOut">로그아웃</button>       
     
-    
-    
-
+    <div>
+      <input class="input" v-model.lazy="name" placeholder="이름" />    
+      <textarea class="memo" v-model.lazy="memo" placeholder="메모" rows="2" ></textarea>
+      <button class="button" @click="shareMemo(name, memo)">전송</button>
+    </div>
+         
     
     <DataTable class="display" :columns="columns" :data="aptRef" :options="options" >
       <thead>
