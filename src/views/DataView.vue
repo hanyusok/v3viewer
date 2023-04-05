@@ -78,7 +78,8 @@ const kakaoLogin = () => {
 
 <template>
   <main>
-    <a @click="kakaoLogin" ><img src="../assets/kakao_login_btn.png" /></a>       
+    <!-- <a @click="kakaoLogin" ><img src="../assets/kakao_login_btn.png" /></a> -->
+    <button @click="kakaoLogin">카카오로그인</button>       
     <DataTable class="display" :columns="columns" :data="aptRef" :options="options" >
       <thead>
         <tr>  
