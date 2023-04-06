@@ -169,6 +169,7 @@ const shareMemo = (name, memo) => {
 <template>
   <main>        
     <button class="button" v-if="!access_token"   @click="kakaoLogin" >로그인</button> 
+    <button class="button" v-if="access_token"   @click="kakaoLogOut">로그아웃</button>       
     <input class="input" v-model.lazy="cost" placeholder="금액" />
     <button class="button" @click="shareMsgInfo(cost)">수납</button>
     <button class="button" @click="shareMsgPharm">문전약국</button>
@@ -178,7 +179,7 @@ const shareMemo = (name, memo) => {
       <label for="email">Email</label>
     <button class="button" @click="shareFaxEmail(picked)">전송</button>   
     <button class="button" @click="sharelab">검사결과</button>
-    <button class="button" v-if="access_token"   @click="kakaoLogOut">로그아웃</button>       
+    
     
     <div>
       <input class="input" v-model.lazy="name" placeholder="이름" />    
