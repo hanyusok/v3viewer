@@ -1,24 +1,24 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 Kakao.init('a58f889b066015dd555af2bb7577af7e');
-console.log('kakao_initialized: ',Kakao.isInitialized());
+console.log('kakao_initialized: ', Kakao.isInitialized());
 </script>
 
 <template>
-<!--   <header>  
-    <div>    
-      <nav>
-        <RouterLink to="/">Data</RouterLink>
-        <RouterLink to="/kakao">Kakao</RouterLink>
-      </nav>
-    </div>
-  </header> -->
+  <!-- <header>
+    <div>
+            <nav>
+              <RouterLink to="/">Home</RouterLink>
+              <RouterLink to="/data">Data</RouterLink>
+            </nav>
+          </div>
+        </header> -->
 
   <RouterView />
 </template>
 
 <style scoped>
-header {
+/* header {
   line-height: 1.5;
   max-height: 100vh;
 }
@@ -78,5 +78,5 @@ nav a:first-of-type {
     padding: 1rem 0;
     margin-top: 1rem;
   }
-}
+} */
 </style>

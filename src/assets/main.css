@@ -1,12 +1,13 @@
-@import './base.css';
+/* @import './base.css'; */
 
-#app {
+
+/* #app {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
 
   font-weight: normal;
-}
+} */
 
 a,
 .green {
@@ -15,16 +16,18 @@ a,
   transition: 0.4s;
 }
 
-.button{
+.button {
   margin-right: 1rem;
   margin-bottom: 1rem;
 }
-.input {
+
+.inputV3 {
   width: 60px;
   text-align: right;
   margin-right: 0.1rem;
-  padding-top: 0.2rem;  
+  padding-top: 0.2rem;
 }
+
 .memo {
   width: 500px;
   text-align: left;

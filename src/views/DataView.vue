@@ -3,12 +3,12 @@ import DataTable from 'datatables.net-vue3'
 import DataTablesCore from 'datatables.net';
 import languageKO from 'datatables.net-plugins/i18n/ko.json'
 import { onMounted, ref, render } from 'vue'
-import { db}  from '@/firebase'
+import { db } from '@/firebase'
 import { collection, query, orderBy, onSnapshot } from "firebase/firestore";
 import { format, formatDistance, formatDistanceStrict, formatDistanceToNow } from 'date-fns'
 import { ko } from 'date-fns/esm/locale'
-import  Swal  from 'sweetalert2'
-import axios  from 'axios'
+import Swal from 'sweetalert2'
+import axios from 'axios'
 import qs from 'qs'
 
 DataTable.use(DataTablesCore)
@@ -17,60 +17,60 @@ DataTable.use(DataTablesCore)
 const colRef = collection(db, "appointments")
 const q = query(colRef, orderBy('createdAt', 'asc'))
 const aptRef = ref([])
-let appointments = aptRef.value  
-const options = {  
+let appointments = aptRef.value
+const options = {
   responsive: true,
   select: true,
   language: languageKO,
 }
 
 const unsubscribe = onSnapshot(q, (snap) => {
-      snap.docChanges().forEach((change) =>{  
-            let changedata = change.doc.data()
+  snap.docChanges().forEach((change) => {
+    let changedata = change.doc.data()
 
-            //DateTime Conversion
-            let preDate = changedata.createdAt.toDate()
-            if (preDate){              
-              // changedata.createdAt = formatDistance(preDate, new Date(), { locale: ko})
-              changedata.createdAt = format(preDate, " MM월dd일p", { locale: ko})
-            }
+    //DateTime Conversion
+    let preDate = changedata.createdAt.toDate()
+    if (preDate) {
+      // changedata.createdAt = formatDistance(preDate, new Date(), { locale: ko})
+      changedata.createdAt = format(preDate, " MM월dd일p", { locale: ko })
+    }
 
-            //when new appointment add
-            changedata.id = change.doc.id    
-            if (change.type === "added") {                          
-              appointments.unshift(changedata)             
-              Swal.fire(`${changedata.name},  ${changedata.createdAt} 신청! `)             
-            }            
-            if (change.type === "modified") {                        
-              let index = appointments.findIndex(apt => apt.id === changedata.id)          
-              Object.assign(appointments[index], changedata)
-            }
-            if (change.type === "removed") {                        
-              let index = appointments.findIndex(apt => apt.id === changedata.id)          
-              appointments.splice(index, 1)              
-            }                       
-          })          
-        },
-      (error) =>{
-        console.log(error)
-      }    
-  )
+    //when new appointment add
+    changedata.id = change.doc.id
+    if (change.type === "added") {
+      appointments.unshift(changedata)
+      Swal.fire(`${changedata.name},  ${changedata.createdAt} 신청! `)
+    }
+    if (change.type === "modified") {
+      let index = appointments.findIndex(apt => apt.id === changedata.id)
+      Object.assign(appointments[index], changedata)
+    }
+    if (change.type === "removed") {
+      let index = appointments.findIndex(apt => apt.id === changedata.id)
+      appointments.splice(index, 1)
+    }
+  })
+},
+  (error) => {
+    console.log(error)
+  }
+)
 
 const columns = [
-  { data: 'createdAt' },	
-  { data: 'name' },	
-  { data: 'jumin' },  
-	{ data: 'history' },	
-	{ data: 'memo' },	
-	{ data: 'phone' },  
-	{ data: 'why' },
+  { data: 'createdAt' },
+  { data: 'name' },
+  { data: 'jumin' },
+  { data: 'history' },
+  { data: 'memo' },
+  { data: 'phone' },
+  { data: 'why' },
   { data: 'email' },
 ]
 
 //kakao scripts start from here
-const kakaoLogOut = () => {  
+const kakaoLogOut = () => {
   Kakao.Auth.logout()
-    .then((resp) => {      
+    .then((resp) => {
       Swal.fire(`로그아웃!`)
       console.log(Kakao.Auth.getAccessToken())
     })
@@ -79,9 +79,9 @@ const kakaoLogOut = () => {
     })
 }
 
-const kakaoLogin = () => {  
-  Kakao.Auth.authorize({ 
-    redirectUri: 'http://localhost:5173/',
+const kakaoLogin = () => {
+  Kakao.Auth.authorize({
+    redirectUri: 'http://localhost:5173/data',
     throughTalk: true,
     scope: 'friends, talk_message'
   })
@@ -90,29 +90,29 @@ const kakaoLogin = () => {
 const authCode = location.search.substring(6)
 const access_token = ref('')
 const kakaOptions = {
-          'grant_type': 'authorization_code',
-          'client_id': '3c4ba9cc89263b9e66bca4c176a4eaf3',            
-          'client_secret': '8orFiiKOUqaaP5N1fbwfARNMmIuPpJCG',          
-          'code': authCode,
-          'redirect_uri': 'http://localhost:5173/'
-        }
+  'grant_type': 'authorization_code',
+  'client_id': '3c4ba9cc89263b9e66bca4c176a4eaf3',
+  'client_secret': '8orFiiKOUqaaP5N1fbwfARNMmIuPpJCG',
+  'code': authCode,
+  'redirect_uri': 'http://localhost:5173/data'
+}
 
-onMounted(async() => {     
-    await axios({
-        method: 'POST',       
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
-          },
-        data: qs.stringify(kakaOptions),
-        url: 'https://kauth.kakao.com/oauth/token'
-      })
-      .then((response) => {                              
-          Kakao.Auth.setAccessToken(response.data.access_token)
-          access_token.value = Kakao.Auth.getAccessToken()
-          console.log(`access_token : ${access_token.value}`)
-      })          
-      .catch((err) => {
-      })
+onMounted(async () => {
+  await axios({
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+    },
+    data: qs.stringify(kakaOptions),
+    url: 'https://kauth.kakao.com/oauth/token'
+  })
+    .then((response) => {
+      Kakao.Auth.setAccessToken(response.data.access_token)
+      access_token.value = Kakao.Auth.getAccessToken()
+      console.log(`access_token : ${access_token.value}`)
+    })
+    .catch((err) => {
+    })
 })
 
 //수납금액
@@ -120,7 +120,7 @@ const cost = ref()
 const shareMsgInfo = (cost) => {
   Kakao.Share.sendCustom({
     templateId: 85061,
-    templateArgs: {      
+    templateArgs: {
       COST: cost
     }
   });
@@ -136,7 +136,7 @@ const shareMsgPharm = () => {
 //검사결과 알림
 const sharelab = () => {
   Kakao.Share.sendCustom({
-    templateId: 92230  
+    templateId: 92230
   });
 }
 
@@ -146,7 +146,7 @@ const shareFaxEmail = (picked) => {
   Kakao.Share.sendCustom({
     templateId: 92231,
     templateArgs: {
-      WAY: picked      
+      WAY: picked
     }
   });
 }
@@ -158,7 +158,7 @@ const shareMemo = (name, memo) => {
     templateId: 92233,
     templateArgs: {
       NAME: name,
-      MEMO: memo      
+      MEMO: memo
     }
   });
 }
@@ -167,37 +167,37 @@ const shareMemo = (name, memo) => {
 </script>
 
 <template>
-  <main>        
-    <button class="button" v-if="!access_token"   @click="kakaoLogin" >로그인</button> 
-    <button class="button" v-if="access_token"   @click="kakaoLogOut">로그아웃</button>       
-    <input class="input" v-model.lazy="cost" placeholder="금액" />
+  <main>
+    <button class="button" v-if="!access_token" @click="kakaoLogin">로그인</button>
+    <button class="button" v-if="access_token" @click="kakaoLogOut">로그아웃</button>
+    <input class="inputV3" v-model.lazy="cost" placeholder="금액" />
     <button class="button" @click="shareMsgInfo(cost)">수납</button>
     <button class="button" @click="shareMsgPharm">문전약국</button>
     <input type="radio" id="fax" value="fax" v-model="picked" />
-      <label for="fax">Fax</label>
+    <label for="fax">Fax</label>
     <input type="radio" id="email" value="email" v-model="picked" />
-      <label for="email">Email</label>
-    <button class="button" @click="shareFaxEmail(picked)">전송</button>   
+    <label for="email">Email</label>
+    <button class="button" @click="shareFaxEmail(picked)">전송</button>
     <button class="button" @click="sharelab">검사결과</button>
-    
-    
+
+
     <div>
-      <input class="input" v-model.lazy="name" placeholder="이름" />    
-      <textarea class="memo" v-model.lazy="memo" placeholder="메모" rows="2" ></textarea>
+      <input class="inputV3" v-model.lazy="name" placeholder="이름" />
+      <textarea class="memo" v-model.lazy="memo" placeholder="메모" rows="2"></textarea>
       <button class="button" @click="shareMemo(name, memo)">전송</button>
     </div>
-         
-    
-    <DataTable class="display" :columns="columns" :data="aptRef" :options="options" >
+
+
+    <DataTable class="display" :columns="columns" :data="aptRef" :options="options">
       <thead>
-        <tr>  
+        <tr>
           <th>날짜</th>
           <th>이름</th>
-          <th>주민번호</th>          
-          <th>재진?</th>          
-          <th>메모</th>          
-          <th>핸드폰</th>          
-			    <th>내용</th>
+          <th>주민번호</th>
+          <th>재진?</th>
+          <th>메모</th>
+          <th>핸드폰</th>
+          <th>내용</th>
           <th>이메일</th>
         </tr>
       </thead>
@@ -205,20 +205,28 @@ const shareMemo = (name, memo) => {
         <tr>
           <th>날짜</th>
           <th>이름</th>
-          <th>주민번호</th>          
-          <th>재진?</th>          
-          <th>메모</th>          
-          <th>핸드폰</th>          
-			    <th>내용</th>
+          <th>주민번호</th>
+          <th>재진?</th>
+          <th>메모</th>
+          <th>핸드폰</th>
+          <th>내용</th>
           <th>이메일</th>
         </tr>
       </tfoot>
     </DataTable>
-    
+
   </main>
 </template>
 <style>
 @import 'datatables.net-dt';
 @import 'datatables.net-bs5';
 @import '../../node_modules/sweetalert2/dist/sweetalert2.min.css';
+
+/* #app {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+
+  font-weight: normal;
+} */
 </style>

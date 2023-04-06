@@ -1,8 +1,300 @@
 <script setup>
-
+import VueForm from '../components/VueForm'
+import { formConfig } from "../config/config";
 </script>
 
 <template>
-  <main>
-  </main>
+  <div id="app">
+    <div class="title">
+      <h1>마트의원 <span> 비대면 </span> 신청</h1>
+    </div>
+    <VueForm :formConfig="formConfig" />
+  </div>
 </template>
+
+<style>
+/* @import "../assets/main.css"; */
+@import url("https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css");
+@import url("https://fonts.googleapis.com/css?family=Rubik:300,400,500,700&display=swap");
+
+/* v3form style start from here*/
+:root {
+  accent-color: #4c9d8d;
+  --primary: #55bea9;
+  --secondary: #4c9d8d;
+  --fonts: #2c3e50;
+  --error: #ef6574;
+  --light: #cef4e0;
+}
+
+body {
+  margin: 0;
+}
+
+#app {
+  font-family: "Rubik", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: var(--fonts);
+  background-image: url("../assets/img/bg.svg");
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-color: var(--light);
+  background-blend-mode: overlay;
+  background-size: cover;
+}
+
+form {
+  background-image: url("../assets/img/vue-mascot.svg");
+  background-position: bottom right;
+  background-size: 20%;
+  height: 100vh;
+  background-repeat: no-repeat;
+}
+
+@media screen and (max-width: 600px) {
+  form {
+    background-size: 35%;
+  }
+}
+
+.form-template {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Title - Advanced Vue.js Form */
+.title h1 {
+  padding-top: 5px;
+  font-weight: 700;
+  font-size: 1.7em;
+}
+
+h1 {
+  color: var(--secondary);
+  position: fixed;
+  left: 0;
+  right: 0;
+  user-select: none;
+  opacity: 0.85;
+}
+
+h1 span {
+  color: var(--fonts)
+}
+
+/* HTML Tags */
+h1 {
+  margin: 15px;
+  font-weight: 300;
+}
+
+h2 {
+  font-size: 2em;
+  margin-bottom: 0.75em;
+}
+
+h2:not(:first-child) {
+  margin-top: 0.75em;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  height: 20px;
+  width: 20px;
+  margin-right: 10px;
+}
+
+input[type="text"],
+textarea {
+  border-color: transparent;
+  border: none;
+  border-bottom: 2px solid var(--light) !important;
+  height: 30px;
+  width: 100%;
+  font-size: 1.5em;
+  border-radius: 2px;
+  background-color: transparent;
+}
+
+input[type="text"]:focus,
+textarea:focus {
+  outline: none;
+  border-bottom: 2px solid var(--primary) !important;
+}
+
+input[type="text"]::placeholder,
+textarea::placeholder {
+  color: var(--fonts);
+  opacity: 0.25;
+}
+
+textarea {
+  height: 120px;
+}
+
+/* Form */
+.field-group {
+  position: absolute;
+  width: 55%;
+}
+
+@media screen and (max-width: 600px) {
+  .field-group {
+    width: 90%;
+  }
+}
+
+.field-label {
+  display: block;
+  padding-bottom: 35px;
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  opacity: 0.7;
+}
+
+.field-label svg {
+  color: var(--primary);
+  font-size: 1.5em;
+}
+
+.input-errors {
+  font-size: 1em;
+  font-weight: 300;
+  color: var(--error);
+  font-weight: 400;
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: 5px 7px;
+}
+
+.input-errors svg {
+  font-size: 25px;
+  margin-right: 5px;
+}
+
+.error-msg {
+  display: flex;
+  align-items: center;
+}
+
+.form-result {
+  display: flex;
+  align-items: center;
+  width: 90%;
+}
+
+pre {
+  white-space: pre-wrap
+}
+
+.form-complete p {
+  padding-left: 100px;
+}
+
+/* Navigation and Progress Bar */
+.nav {
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  right: 0;
+  background-color: inherit;
+  padding: 5px;
+  z-index: 10;
+  display: flex;
+  justify-content: left;
+  transition: background-color 0.5s ease;
+}
+
+.form-button {
+  display: flex;
+  border: none;
+  margin-left: 0;
+  margin-right: 3px;
+  border-radius: 3px;
+  font-size: 1em;
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  font-weight: 500;
+  padding: 5px 10px;
+  background-color: var(--primary);
+  color: white;
+}
+
+.form-button:hover {
+  background-color: var(--secondary)
+}
+
+.form-button svg {
+  font-size: 25px;
+}
+
+.disabled {
+  pointer-events: none;
+  background: lightgrey;
+}
+
+.form-error-message {
+  margin-top: 50px;
+  position: inherit;
+}
+
+.form-error-message .form-button {
+  font-weight: 700;
+  padding: 10px 15px;
+}
+
+.info-block {
+  font-size: 1.5em;
+}
+
+.bar {
+  height: 7px;
+  width: 0px;
+  background-color: var(--primary);
+  border-radius: 2px;
+  position: fixed;
+  top: 66px;
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+}
+
+/* Media query for portrait mode */
+@media only screen and (orientation: portrait) {
+  input[type="text"] {
+    font-size: 1.4em;
+  }
+
+  textarea {
+    font-size: 1.2em;
+  }
+
+  .form-complete {
+    padding-top: 35%;
+    padding-bottom: 35%;
+  }
+
+  .form-complete p {
+    padding-left: 30px !important;
+  }
+}
+
+.instructions {
+  font-size: 0.7em;
+  opacity: 0.7;
+}
+
+.instructions svg {
+  position: relative;
+  opacity: 0.85;
+  top: 5px;
+  font-size: 1.3em;
+}
+
+.instructions span {
+  font-weight: bold;
+}
+</style>
