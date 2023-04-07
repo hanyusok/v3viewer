@@ -170,32 +170,43 @@ const shareMemo = (name, memo) => {
   <main class="main">
     <div class="container">
       <h3>접수 데스크</h3>
-      <div style="align-items: hori;">
+      <div style="float: left;">
         <p>카톡 보내기: </p>  
         <button class="button" v-if="!access_token" @click="kakaoLogin">로그인</button>
         <button class="button" v-if="access_token" @click="kakaoLogOut">로그아웃</button>
       </div>
       
+      <div style="float: left;">
+        <input class="moneyInput" v-model.lazy="cost" placeholder="금액" />
+        <button class="button" @click="shareMsgInfo(cost)">수납</button>
+      </div>
       
-      <input class="moneyInput" v-model.lazy="cost" placeholder="금액" />
-      <button class="button" @click="shareMsgInfo(cost)">수납</button>
-      <button class="button" @click="shareMsgPharm">문전약국</button>
-      <input type="radio" id="fax" value="fax" v-model="picked" />
-      <label for="fax">Fax</label>
-      <input type="radio" id="email" value="email" v-model="picked" />
-      <label for="email">Email</label>
-      <button class="button" @click="shareFaxEmail(picked)">전송</button>
-      <button class="button" @click="sharelab">검사결과</button>
+      <div style="float:left">
+        <button class="button" @click="shareMsgPharm">문전약국</button>
+      </div>
+      
 
+      <div style="float:left">
+        <label for="fax">Fax</label>
+        <input type="radio" id="fax" value="fax" v-model="picked" />
+        <label for="email">Email</label>
+        <input type="radio" id="email" value="email" v-model="picked" />
+        <button class="button" @click="shareFaxEmail(picked)">전송</button>
+      </div>      
+      
+      <div style="float:left">
+        <button class="button" @click="sharelab">검사결과 알림톡</button>
+      </div>
+      
 
-      <div>
+      <div style="float:left">
         <input class="inputV3" v-model.lazy="name" placeholder="이름" />
         <textarea class="textarea" v-model.lazy="memo" placeholder="메모" rows="2"></textarea>
         <button class="button" @click="shareMemo(name, memo)">전송</button>
       </div>
-    </div>
+    </div>    
 
-
+  
     <DataTable class="display" :columns="columns" :data="aptRef" :options="options">
       <thead>
         <tr>
@@ -236,8 +247,9 @@ const shareMemo = (name, memo) => {
   padding: 2rem;
   font-weight: normal;
 }  
-.container{
-  background-color: azure;
+.container{  
+  border: #ccc 2px solid;
+  border-radius: 8px;
 }
 .moneyInput{
   width: 100px;
@@ -248,7 +260,7 @@ const shareMemo = (name, memo) => {
 }
 .textarea {
   width: 100%;
-  height: 150px;
+  height: 100px;
   padding: 12px 20px;
   box-sizing: border-box;
   border: 2px solid #ccc;
