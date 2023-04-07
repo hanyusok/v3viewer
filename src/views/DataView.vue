@@ -39,7 +39,7 @@ const unsubscribe = onSnapshot(q, (snap) => {
     changedata.id = change.doc.id
     if (change.type === "added") {
       appointments.unshift(changedata)
-      Swal.fire(`${changedata.name},  ${changedata.createdAt} 신청! `)
+      // Swal.fire(`${changedata.name},  ${changedata.createdAt} 신청! `)
     }
     if (change.type === "modified") {
       let index = appointments.findIndex(apt => apt.id === changedata.id)
@@ -167,24 +167,32 @@ const shareMemo = (name, memo) => {
 </script>
 
 <template>
-  <main>
-    <button class="button" v-if="!access_token" @click="kakaoLogin">로그인</button>
-    <button class="button" v-if="access_token" @click="kakaoLogOut">로그아웃</button>
-    <input class="inputV3" v-model.lazy="cost" placeholder="금액" />
-    <button class="button" @click="shareMsgInfo(cost)">수납</button>
-    <button class="button" @click="shareMsgPharm">문전약국</button>
-    <input type="radio" id="fax" value="fax" v-model="picked" />
-    <label for="fax">Fax</label>
-    <input type="radio" id="email" value="email" v-model="picked" />
-    <label for="email">Email</label>
-    <button class="button" @click="shareFaxEmail(picked)">전송</button>
-    <button class="button" @click="sharelab">검사결과</button>
+  <main class="main">
+    <div class="container">
+      <h3>접수 데스크</h3>
+      <div style="align-items: hori;">
+        <p>카톡 보내기: </p>  
+        <button class="button" v-if="!access_token" @click="kakaoLogin">로그인</button>
+        <button class="button" v-if="access_token" @click="kakaoLogOut">로그아웃</button>
+      </div>
+      
+      
+      <input class="moneyInput" v-model.lazy="cost" placeholder="금액" />
+      <button class="button" @click="shareMsgInfo(cost)">수납</button>
+      <button class="button" @click="shareMsgPharm">문전약국</button>
+      <input type="radio" id="fax" value="fax" v-model="picked" />
+      <label for="fax">Fax</label>
+      <input type="radio" id="email" value="email" v-model="picked" />
+      <label for="email">Email</label>
+      <button class="button" @click="shareFaxEmail(picked)">전송</button>
+      <button class="button" @click="sharelab">검사결과</button>
 
 
-    <div>
-      <input class="inputV3" v-model.lazy="name" placeholder="이름" />
-      <textarea class="memo" v-model.lazy="memo" placeholder="메모" rows="2"></textarea>
-      <button class="button" @click="shareMemo(name, memo)">전송</button>
+      <div>
+        <input class="inputV3" v-model.lazy="name" placeholder="이름" />
+        <textarea class="textarea" v-model.lazy="memo" placeholder="메모" rows="2"></textarea>
+        <button class="button" @click="shareMemo(name, memo)">전송</button>
+      </div>
     </div>
 
 
@@ -222,11 +230,31 @@ const shareMemo = (name, memo) => {
 @import 'datatables.net-bs5';
 @import '../../node_modules/sweetalert2/dist/sweetalert2.min.css';
 
-/* #app {
+.main {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
-
   font-weight: normal;
-} */
+}  
+.container{
+  background-color: azure;
+}
+.moneyInput{
+  width: 100px;
+  border: 2px solid grey;
+  padding: 5px 10px;
+  border-radius: 4px;
+  text-align: end;
+}
+.textarea {
+  width: 100%;
+  height: 150px;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  resize: none;
+}
+
 </style>
