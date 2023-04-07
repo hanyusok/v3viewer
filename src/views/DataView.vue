@@ -39,7 +39,7 @@ const unsubscribe = onSnapshot(q, (snap) => {
     changedata.id = change.doc.id
     if (change.type === "added") {
       appointments.unshift(changedata)
-      // Swal.fire(`${changedata.name},  ${changedata.createdAt} 신청! `)
+      //Swal.fire(`${changedata.name},  ${changedata.createdAt} 신청! `)
     }
     if (change.type === "modified") {
       let index = appointments.findIndex(apt => apt.id === changedata.id)
@@ -169,42 +169,45 @@ const shareMemo = (name, memo) => {
 <template>
   <main class="main">
     <div class="container">
-      <h3>접수 데스크</h3>
-      <div style="float: left;">
-        <p>카톡 보내기: </p>  
-        <button class="button" v-if="!access_token" @click="kakaoLogin">로그인</button>
-        <button class="button" v-if="access_token" @click="kakaoLogOut">로그아웃</button>
+      <!-- <h3>접수 데스크</h3> -->
+      <div>
+        <!-- <p>카톡 보내기: </p>   -->
+        <button class="btn" v-if="!access_token" @click="kakaoLogin">로그인</button>
+        <button class="btn" v-if="access_token" @click="kakaoLogOut">로그아웃</button>
       </div>
       
-      <div style="float: left;">
+      <div>
         <input class="moneyInput" v-model.lazy="cost" placeholder="금액" />
-        <button class="button" @click="shareMsgInfo(cost)">수납</button>
+        <button class="btn" @click="shareMsgInfo(cost)">수납</button>
       </div>
       
-      <div style="float:left">
-        <button class="button" @click="shareMsgPharm">문전약국</button>
+      <div>
+        <button class="btn" @click="shareMsgPharm">문전약국</button>
       </div>
       
 
-      <div style="float:left">
+      <div>
         <label for="fax">Fax</label>
         <input type="radio" id="fax" value="fax" v-model="picked" />
         <label for="email">Email</label>
         <input type="radio" id="email" value="email" v-model="picked" />
-        <button class="button" @click="shareFaxEmail(picked)">전송</button>
+        <button class="btn" @click="shareFaxEmail(picked)">전송</button>
       </div>      
       
-      <div style="float:left">
-        <button class="button" @click="sharelab">검사결과 알림톡</button>
+      <div>
+        <button class="btn" @click="sharelab">검사결과 알림톡</button>
       </div>
       
 
-      <div style="float:left">
-        <input class="inputV3" v-model.lazy="name" placeholder="이름" />
+      <div>
+        <input class="input" v-model.lazy="name" placeholder="이름" />
         <textarea class="textarea" v-model.lazy="memo" placeholder="메모" rows="2"></textarea>
-        <button class="button" @click="shareMemo(name, memo)">전송</button>
+        <button class="btn" @click="shareMemo(name, memo)">전송</button>
       </div>
     </div>    
+<!-- 여기부터 -->
+   
+
 
   
     <DataTable class="display" :columns="columns" :data="aptRef" :options="options">
@@ -246,13 +249,20 @@ const shareMemo = (name, memo) => {
   margin: 0 auto;
   padding: 2rem;
   font-weight: normal;
+  
 }  
-.container{  
+.container { 
+  background-color: whitesmoke; 
   border: #ccc 2px solid;
   border-radius: 8px;
+  display: flex;
+  padding: 10px 10px;
+  /* height: 20vh; */
+  
 }
+
 .moneyInput{
-  width: 100px;
+  width:auto;
   border: 2px solid grey;
   padding: 5px 10px;
   border-radius: 4px;
@@ -268,5 +278,24 @@ const shareMemo = (name, memo) => {
   background-color: #f8f8f8;
   resize: none;
 }
+.btn {
+  background-color: rgb(165, 236, 227);
+  border: none;
+  border-color: rgb(158, 201, 236) solid;
+  border-radius: 4px;
+  box-sizing: border-box;
+  cursor: pointer;
+  font-size: 16px ;
+  height: 30px;
+  outline: 1;
+  text-align: center;
+  width: 100%;
+  padding: 10px px;
+  text-decoration: none;
+  display: inline-block;
+}
+
+
+
 
 </style>
