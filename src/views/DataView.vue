@@ -169,14 +169,17 @@ const shareMemo = (name, memo) => {
 <template>
   <main class="main">
     <div class="container">
-      <!-- <h3>접수 데스크</h3> -->
-      <div>
-        <!-- <p>카톡 보내기: </p>   -->
+      <h3>카카오 메세지 서비스</h3>
+      <div></div>      
+      <div></div>
+      <div style="display: flex;">
+        <p>Status: </p>  
         <button class="btn" v-if="!access_token" @click="kakaoLogin">로그인</button>
         <button class="btn" v-if="access_token" @click="kakaoLogOut">로그아웃</button>
       </div>
       
-      <div>
+      <div style="display: inline">
+        <p>수납 금액: </p>
         <input class="moneyInput" v-model.lazy="cost" placeholder="금액" />
         <button class="btn" @click="shareMsgInfo(cost)">수납</button>
       </div>
@@ -186,10 +189,10 @@ const shareMemo = (name, memo) => {
       </div>
       
 
-      <div>
-        <label for="fax">Fax</label>
+      <div style="display: flex;">
+        <label>Fax</label>
         <input type="radio" id="fax" value="fax" v-model="picked" />
-        <label for="email">Email</label>
+        <label>Email</label>
         <input type="radio" id="email" value="email" v-model="picked" />
         <button class="btn" @click="shareFaxEmail(picked)">전송</button>
       </div>      
@@ -205,10 +208,6 @@ const shareMemo = (name, memo) => {
         <button class="btn" @click="shareMemo(name, memo)">전송</button>
       </div>
     </div>    
-<!-- 여기부터 -->
-   
-
-
   
     <DataTable class="display" :columns="columns" :data="aptRef" :options="options">
       <thead>
@@ -255,14 +254,18 @@ const shareMemo = (name, memo) => {
   background-color: whitesmoke; 
   border: #ccc 2px solid;
   border-radius: 8px;
-  display: flex;
+  /* flex: auto; */
+  display: grid; 
+  column-gap: 10px;
+  grid-template-columns: auto auto auto;
+  grid-template-rows: auto auto;
   padding: 10px 10px;
   /* height: 20vh; */
   
 }
 
 .moneyInput{
-  width:auto;
+  width: auto;
   border: 2px solid grey;
   padding: 5px 10px;
   border-radius: 4px;
@@ -289,7 +292,7 @@ const shareMemo = (name, memo) => {
   height: 30px;
   outline: 1;
   text-align: center;
-  width: 100%;
+  width: auto;
   padding: 10px px;
   text-decoration: none;
   display: inline-block;
