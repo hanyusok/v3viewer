@@ -113,65 +113,65 @@ const shareMemo = (name, memo) => {
 
 <template>
     <div class="container">
+        <n-space justify="space-between">
+            <n-card>
+                <n-icon size="30">
+                    <user-check />
+                </n-icon>
+                카톡 사용자
+                <n-button tertiary round type="success" v-if="!access_token" @click="kakaoLogin">카카오로그인</n-button>
+                <n-button tertiary round type="error" v-if="access_token" @click="kakaoLogOut">카카오로그아웃</n-button>
+            </n-card>
 
-        <n-card>
-            <n-icon size="30">
-                <user-check />
-            </n-icon>
-            카톡 사용자
-            <n-button tertiary round type="success" v-if="!access_token" @click="kakaoLogin">카카오로그인</n-button>
-            <n-button tertiary round type="error" v-if="access_token" @click="kakaoLogOut">카카오로그아웃</n-button>
-        </n-card>
+            <n-card>
+                <n-icon size="30">
+                    <comments-dollar />
+                </n-icon>
+                수납안내
+                <n-input round v-model:value="cost" placeholder="요청금액">
+                    <template #suffix>원</template>
+                </n-input>
+                <n-button @click="shareMsgInfo(cost)">알림톡</n-button>
+            </n-card>
 
-        <n-card>
+            <n-card>
+                <n-icon size="30">
+                    <tablets />
+                </n-icon>
+                마트약국
+                <n-button @click="shareMsgPharm">알림톡</n-button>
+            </n-card>
 
-            <n-icon size="30">
-                <comments-dollar />
-            </n-icon>
-            수납안내
-            <n-input round v-model:value="cost" placeholder="요청금액">
-                <template #suffix>원</template>
-            </n-input>
-            <n-button @click="shareMsgInfo(cost)">알림톡</n-button>
-        </n-card>
+            <n-card>
+                <n-icon size="30">
+                    <fax />
+                </n-icon>처방전 전송
+                <n-space item-style="display: flex;" align="center">
+                    <n-radio :checked="checkedValue === 'email'" value="email" @change="handleChange">이메일</n-radio>
+                    <n-radio :checked="checkedValue === 'fax'" value="fax" @change="handleChange">팩스</n-radio>
+                    <n-button @click="shareFaxEmail(picked)">알림톡</n-button>
+                </n-space>
+            </n-card>
 
-        <n-card>
-            <n-icon size="30">
-                <tablets />
-            </n-icon>
-            마트약국
-            <n-button @click="shareMsgPharm">알림톡</n-button>
-        </n-card>
+            <n-card>
+                <n-icon size="30">
+                    <chart-bar-regular />
+                </n-icon>검사결과 안내
+                <n-button @click="sharelab">알림톡</n-button>
+            </n-card>
 
-        <n-card>
-            <n-icon size="30">
-                <fax />
-            </n-icon>처방전 전송
-            <n-space item-style="display: flex;" align="center">
-                <n-radio :checked="checkedValue === 'email'" value="email" @change="handleChange">이메일</n-radio>
-                <n-radio :checked="checkedValue === 'fax'" value="fax" @change="handleChange">팩스</n-radio>
-                <n-button @click="shareFaxEmail(picked)">알림톡</n-button>
-            </n-space>
-        </n-card>
-
-        <n-card>
-            <n-icon size="30">
-                <chart-bar-regular />
-            </n-icon>검사결과 안내
-            <n-button @click="sharelab">알림톡</n-button>
-        </n-card>
-
-        <n-card>
-            <n-icon size="30">
-                <comment-dots-regular />
-            </n-icon>
-            문자 전송
-            <n-space item-style="display: flex;" align="start" vertical>
-                이름<n-input v-model:value="name" type="text" placeholder="이름" />
-                메모<n-input maxlength="200" show-count v-model:value="memo" type="textarea" placeholder="내용" />
-            </n-space>
-            <n-button @click="shareMemo(name, memo)">알림톡</n-button>
-        </n-card>
+            <n-card>
+                <n-icon size="30">
+                    <comment-dots-regular />
+                </n-icon>
+                문자 전송
+                <n-space item-style="display: flex;" align="start" vertical>
+                    이름<n-input v-model:value="name" type="text" placeholder="이름" />
+                    메모<n-input maxlength="200" show-count v-model:value="memo" type="textarea" placeholder="내용" />
+                </n-space>
+                <n-button @click="shareMemo(name, memo)">알림톡</n-button>
+            </n-card>
+        </n-space>
     </div>
 </template>
 
@@ -185,7 +185,7 @@ const shareMemo = (name, memo) => {
 }
 
 .n-card {
-    max-width: 212px;
+    max-width: 200px;
     display: inline-flex;
 }
 </style>
