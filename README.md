@@ -31,5 +31,5 @@ npm run build
 ### Reference
 
 ```sh
-https://themeselection.com/item/materio-free-vuetify-vuejs-admin-template/
+https://www.naiveui.com/en-US/os-theme/components/card
 ```

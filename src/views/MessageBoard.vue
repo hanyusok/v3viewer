@@ -2,6 +2,7 @@
 import { onMounted, ref, render } from 'vue'
 import axios from 'axios'
 import qs from 'qs'
+import { NButton, NCard } from 'naive-ui'
 
 
 //kakao scripts start from here
@@ -107,13 +108,12 @@ const shareMemo = (name, memo) => {
 <template>
     <div class="container">
         <h3>카카오 메세지 서비스</h3>
-        <div></div>
-        <div></div>
-        <div style="display: flex;">
+        
+        <!-- <div style="display: flex;">
             <p>Status: </p>
             <button class="btn" v-if="!access_token" @click="kakaoLogin">로그인</button>
             <button class="btn" v-if="access_token" @click="kakaoLogOut">로그아웃</button>
-        </div>
+        </div> -->
 
         <div style="display: inline">
             <p>수납 금액: </p>
@@ -145,6 +145,18 @@ const shareMemo = (name, memo) => {
             <button class="btn" @click="shareMemo(name, memo)">전송</button>
         </div>
     </div>
+
+    
+    <n-card title="Status">
+        <n-button v-if="!access_token" @click="kakaoLogin">카카오로그인</n-button>
+        <n-button v-if="access_token" @click="kakaoLogOut">카카오로그아웃</n-button>
+    </n-card>
+    <n-card title="Card">
+    Card Content
+    </n-card>
+    <n-card title="Card">
+    Card Content
+    </n-card>
 </template>
 
 <style>
@@ -156,54 +168,10 @@ const shareMemo = (name, memo) => {
 
 }
 
-.container {
-    background-color: whitesmoke;
-    border: #ccc 2px solid;
-    border-radius: 8px;
-    /* flex: auto; */
-    display: grid;
-    column-gap: 10px;
-    grid-template-columns: auto auto auto;
-    grid-template-rows: auto auto;
-    padding: 10px 10px;
-    /* height: 20vh; */
-
+.n-card {
+  max-width: 300px;
+  display: inline-flex;
 }
 
-.moneyInput {
-    width: auto;
-    border: 2px solid grey;
-    padding: 5px 10px;
-    border-radius: 4px;
-    text-align: end;
-}
-
-.textarea {
-    width: 100%;
-    height: 100px;
-    padding: 12px 20px;
-    box-sizing: border-box;
-    border: 2px solid #ccc;
-    border-radius: 4px;
-    background-color: #f8f8f8;
-    resize: none;
-}
-
-.btn {
-    background-color: rgb(165, 236, 227);
-    border: none;
-    border-color: rgb(158, 201, 236) solid;
-    border-radius: 4px;
-    box-sizing: border-box;
-    cursor: pointer;
-    font-size: 16px;
-    height: 30px;
-    outline: 1;
-    text-align: center;
-    width: auto;
-    padding: 10px px;
-    text-decoration: none;
-    display: inline-block;
-}
 </style>
 
