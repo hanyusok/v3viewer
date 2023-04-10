@@ -2,7 +2,7 @@
 import { onMounted, ref, render } from 'vue'
 import axios from 'axios'
 import qs from 'qs'
-import { NButton, NCard } from 'naive-ui'
+import { NButton, NCard, NInput, NCheckbox, NSpace, NRadio } from 'naive-ui'
 
 
 //kakao scripts start from here
@@ -81,6 +81,7 @@ const sharelab = () => {
 
 //팩스 이메일 전송
 const picked = ref("")
+const checkedValue = ref(null)
 const shareFaxEmail = (picked) => {
     Kakao.Share.sendCustom({
         templateId: 92231,
@@ -109,22 +110,6 @@ const shareMemo = (name, memo) => {
     <div class="container">
         <h3>카카오 메세지 서비스</h3>
         
-        <!-- <div style="display: flex;">
-            <p>Status: </p>
-            <button class="btn" v-if="!access_token" @click="kakaoLogin">로그인</button>
-            <button class="btn" v-if="access_token" @click="kakaoLogOut">로그아웃</button>
-        </div> -->
-
-        <div style="display: inline">
-            <p>수납 금액: </p>
-            <input class="moneyInput" v-model.lazy="cost" placeholder="금액" />
-            <button class="btn" @click="shareMsgInfo(cost)">수납</button>
-        </div>
-
-        <div>
-            <button class="btn" @click="shareMsgPharm">문전약국</button>
-        </div>
-
 
         <div style="display: flex;">
             <label>Fax</label>
@@ -133,10 +118,7 @@ const shareMemo = (name, memo) => {
             <input type="radio" id="email" value="email" v-model="picked" />
             <button class="btn" @click="shareFaxEmail(picked)">전송</button>
         </div>
-
-        <div>
-            <button class="btn" @click="sharelab">검사결과 알림톡</button>
-        </div>
+     
 
 
         <div>
@@ -151,11 +133,42 @@ const shareMemo = (name, memo) => {
         <n-button v-if="!access_token" @click="kakaoLogin">카카오로그인</n-button>
         <n-button v-if="access_token" @click="kakaoLogOut">카카오로그아웃</n-button>
     </n-card>
-    <n-card title="Card">
-    Card Content
+    
+    <n-card title="수납 안내">    
+        <n-input round v-model:value="cost" >        
+            <template #suffix>$원</template>            
+        </n-input>
+        <n-button @click="shareMsgInfo(cost)">보내기</n-button>
     </n-card>
-    <n-card title="Card">
-    Card Content
+    
+    <n-card title="처방전 전송">제일약국
+        <n-button  @click="shareMsgPharm">톡보내기</n-button>
+    </n-card>
+
+    <n-card title="Email/Fax 전송">
+        <n-space item-style="display: flex;" align="center">
+            <n-radio
+                :checked="checkedValue === 'fax'"
+                value="fax"                
+                @change="(e) => {
+                    picked = e.target.value
+                }"
+                >
+                팩스
+            </n-radio>
+            <n-radio 
+                :checked="checkedValue === 'email'" 
+                value="email" 
+                @change="(e) => {
+                    picked = e.target.value
+                }"
+                >이메일</n-radio>                            
+            <n-button  @click="shareFaxEmail(picked)">톡보내기</n-button>        
+         </n-space>
+    </n-card>
+
+    <n-card title="검사 안내">내원 상담
+        <n-button  @click="sharelab">톡보내기</n-button>
     </n-card>
 </template>
 
@@ -169,7 +182,7 @@ const shareMemo = (name, memo) => {
 }
 
 .n-card {
-  max-width: 300px;
+  max-width: 200px;
   display: inline-flex;
 }
 
