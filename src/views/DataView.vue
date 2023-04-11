@@ -2,10 +2,10 @@
 import DataTable from 'datatables.net-vue3'
 import DataTablesCore from 'datatables.net';
 import languageKO from 'datatables.net-plugins/i18n/ko.json'
-import { onMounted, ref, render } from 'vue'
+import { ref } from 'vue'
 import { db } from '@/firebase'
 import { collection, query, orderBy, onSnapshot } from "firebase/firestore";
-import { format, formatDistance, formatDistanceStrict, formatDistanceToNow } from 'date-fns'
+import { format  } from 'date-fns'
 import { ko } from 'date-fns/esm/locale'
 import Swal from 'sweetalert2'
 import MessageBoard from './MessageBoard.vue';
@@ -38,7 +38,7 @@ const unsubscribe = onSnapshot(q, (snap) => {
     changedata.id = change.doc.id
     if (change.type === "added") {
       appointments.unshift(changedata)
-      Swal.fire(`${changedata.name},  ${changedata.createdAt} 신청! `)
+      Swal.fire(`${changedata.name}, ${changedata.phone}, ${changedata.createdAt} 신청! `)
     }
     if (change.type === "modified") {
       let index = appointments.findIndex(apt => apt.id === changedata.id)
