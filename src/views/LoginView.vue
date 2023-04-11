@@ -4,7 +4,7 @@ import { NButton, NCard, NInput, NSpace, NRadio, NTag, NSwitch, NIcon } from 'na
 import { GlassesOutline, Glasses } from "@vicons/ionicons5";
 import Swal from 'sweetalert2'
 import { useIdentityStore } from '../stores/identityStore'
-// import router from '../router/index'
+import router from '../router/index'
 
 const loginPassword = "han@6578279"
 const enteredPassword = ref("")
@@ -13,7 +13,7 @@ const comparePassword = (enteredPassword) => {
     if (loginPassword === enteredPassword) {
         identityStore.isAllowed = true
         Swal.fire(`OK, you're allowed`)
-        // router.go('/data')
+        router.push('/data')
     } else {
         identityStore.isAllowed = false
         Swal.fire(`비밀번호 틀립니다!`)
