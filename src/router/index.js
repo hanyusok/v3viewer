@@ -12,8 +12,7 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'home',      
-      meta: { auth: false},
+      name: 'home',            
       component: HomeView
     },
     {
@@ -31,17 +30,19 @@ const router = createRouter({
   ]
 })
 
-router.beforeEach((to, from, next) => {
-  const identityStore = useIdentityStore()
-  const allowed = identityStore.isAllowed
-  if(!allowed) {
-      next('/login')
-    } else if (allowed) {
-      next('/data')
-    } else {
-      next('/')
-    }
-}) 
+// router.beforeEach((to, from, next) => {
+//   const identityStore = useIdentityStore()
+//   const allowed = identityStore.isAllowed
+//   return '/'
+
+  // if(!to.meta.auth ) {
+  //     next('/login')
+  //   } else if (to.meta.auth ) {
+  //     next('/data')
+  //   } else {
+  //     next('/')
+  //   }
+// }) 
 
 
 
