@@ -3,7 +3,7 @@ import DataView from '../views/DataView.vue'
 import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
 import { useIdentityStore } from '../stores/identityStore'
-
+import Swal from 'sweetalert2'
 
 
 
@@ -16,33 +16,41 @@ const router = createRouter({
       component: HomeView
     },
     {
-      path: '/login',
+      path: '/login', 
       name: 'login',      
-      meta: { auth: false},
+      // meta: { auth: false},
       component: LoginView
     },  
     {
       path: '/data',
       name: 'data',
-      meta: { auth: true},
-      component: DataView,       
+      // meta: { auth: true},
+      component: DataView, 
+      // beforeEnter: (to, from, next) => {
+      //   const identityStore = useIdentityStore()
+      //   if (identityStore.isAllowed == false) {
+      //     next('/login')
+      //   } else {
+      //     next()
+      //   }
+      // }
+    
     }  
   ]
 })
 
-// router.beforeEach((to, from, next) => {
-//   const identityStore = useIdentityStore()
-//   const allowed = identityStore.isAllowed
-//   return '/'
+router.beforeResolve()
 
-  // if(!to.meta.auth ) {
-  //     next('/login')
-  //   } else if (to.meta.auth ) {
-  //     next('/data')
-  //   } else {
-  //     next('/')
-  //   }
-// }) 
+
+
+
+router.beforeEach((to, from, next) => {
+  const identityStore = useIdentityStore()
+  if (to.name !== 'login' && !identityStore.isAllowed) next({ name: 'login'})
+  else next()
+})
+
+
 
 
 
