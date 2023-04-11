@@ -33,4 +33,5 @@ npm run build
 ```sh
 https://www.naiveui.com/en-US/os-theme/components/card
 https://youtu.be/P3PW-PbG-ns
+https://www.youtube.com/watch?v=z23GR2xRP38
 ```
