@@ -7,16 +7,14 @@ console.log('kakao_initialized: ', Kakao.isInitialized());
 <template>
   <!-- <header>
     <div>
-            <nav>
-              <RouterLink to="/">Home</RouterLink>
-              <RouterLink to="/data">Data</RouterLink>
-            </nav>
-          </div>
-        </header> -->
+              <nav>
+                <RouterLink to="/">Home</RouterLink>
+                <RouterLink to="/data">Data</RouterLink>
+              </nav>
+            </div>
+          </header> -->
 
   <RouterView />
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

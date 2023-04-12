@@ -25,7 +25,7 @@ const comparePassword = (enteredPassword) => {
 
 <template>
     <div class="my">
-        <n-card title="Staff Only">
+        <n-card title="마트의원">
             <n-space vertical>
                 <n-input v-model:value="enteredPassword" type="password" show-password-on="mousedown"
                     placeholder="비밀번호 입력하세요" :maxlength="11" />
