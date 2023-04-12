@@ -9,7 +9,7 @@ import { CommentsDollar, Tablets, Fax, ChartBarRegular, UserCheck, CommentDotsRe
 //kakao scripts start from here
 const kakaoLogin = () => {
     Kakao.Auth.authorize({
-        redirectUri: 'http://localhost:5173/data',
+        redirectUri: 'http://calldoc.co.kr:5173/data',
         throughTalk: true,
         scope: 'friends, talk_message'
     })
@@ -34,7 +34,7 @@ const kakaOptions = {
     'client_id': '3c4ba9cc89263b9e66bca4c176a4eaf3',
     'client_secret': '8orFiiKOUqaaP5N1fbwfARNMmIuPpJCG',
     'code': authCode,
-    'redirect_uri': 'http://localhost:5173/data'
+    'redirect_uri': 'http://calldoc.co.kr:5173/data'
 }
 
 onMounted(async () => {
